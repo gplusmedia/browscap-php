@@ -15,49 +15,6 @@ Run the command below to install via Composer
 composer require browscap/browscap-php 
 ```
 
-Then you may identify the current user agent this way:
-
-```php
-$cache = new \MatthiasMullie\Scrapbook\Psr16\SimpleCache($doctrineFileCache); // or maybe any other PSR-16 compatible caches
-$logger = new \Monolog\Logger('name'); // or maybe any other PSR-3 compatible logger
-
-$browscap = new \BrowscapPHP\Browscap($cache, $logger);
-$info = $browscap->getBrowser();
-```
-
-If you want to autoupdate the used cache, we recommend a separate cron job that calls the command listed above.
-
-BC breaks in version 7.0.x
------------------------------
-
-```
- - [BC] BrowscapPHP\Command\UpdateCommand was marked "@internal"
- - [BC] BrowscapPHP\Command\FetchCommand was marked "@internal"
- - [BC] BrowscapPHP\Command\ConvertCommand was marked "@internal"
- - [BC] BrowscapPHP\Command\CheckUpdateCommand was marked "@internal"
- - [BC] BrowscapPHP\Command\ParserCommand was marked "@internal"
- - [BC] BrowscapPHP\Helper\Filesystem was marked "@internal"
-```
-
-Setup Examples
---------------
-
-```php
-$fileCache = new \League\Flysystem\Local\LocalFilesystemAdapter($cacheDir);
-$filesystem = new \League\Flysystem\Filesystem($fileCache);
-$cache = new \MatthiasMullie\Scrapbook\Psr16\SimpleCache(
-    new \MatthiasMullie\Scrapbook\Adapters\Flysystem($filesystem)
-);
-
-$logger = new \Monolog\Logger('name');
-
-$bc = new \BrowscapPHP\Browscap($cache, $logger);
-$result = $bc->getBrowser();
-```
-
-NOTE: You may use any other cache which implements
-the [PSR-16](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-16-simple-cache.md) interface.
-
 ## Using the full browscap.ini file
 
 ```php
